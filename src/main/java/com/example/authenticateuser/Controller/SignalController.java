@@ -5,7 +5,8 @@ import com.example.authenticateuser.Service.SignalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/signal")
@@ -15,12 +16,26 @@ public class SignalController {
 
     ArrayList<Signal> arrayList = new ArrayList<>();
 
+//    @GetMapping("/123")
+//    public int test(){
+//        System.out.println("enter");
+//        return 3;
+//    }
+
     @PostMapping("/save")
-    public Signal saveSignal(@RequestBody Signal signal){
+    public Signal save(@RequestBody Signal signal){
         arrayList.add(signal);
-
-//        signalService.save(signal);
-
+        System.out.println(signal.toString() +"||" +arrayList.size());
+        String data = signal.collectData();
+        try {
+            FileOutputStream fos = new FileOutputStream("test.csv",true);
+            fos.write(data.getBytes());
+            fos.write(System.getProperty("line.separator").getBytes());
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return signal;
     }
 

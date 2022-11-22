@@ -13,10 +13,6 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping
 public class UserController {
-
-
-
-
     @Autowired
     UserService userService;
 
@@ -33,8 +29,6 @@ public class UserController {
 
     @PutMapping("/addUser")
     public User addUser(@RequestBody User user) {
-
-
         return userService.insertIntoDatabase(user);
     }
 
